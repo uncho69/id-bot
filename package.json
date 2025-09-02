@@ -1,0 +1,27 @@
+{
+  "name": "defi-mentor-bot",
+  "version": "1.0.0",
+  "description": "AI Bot educativo per Web3 e DeFi basato su contenuti Notion",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "npm install"
+  },
+  "keywords": ["web3", "defi", "blockchain", "ai", "bot", "notion"],
+  "author": "ImparoDeFi",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "axios": "^1.6.0",
+    "openai": "^4.20.1",
+    "body-parser": "^1.20.2",
+    "helmet": "^7.1.0",
+    "rate-limiter-flexible": "^2.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

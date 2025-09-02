@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeFi Mentor - Il tuo assistente Web3</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 12px;
+            height: 12px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .message.bot {
+            background: #f3f4f6;
+            color: #374151;
+            align-self: flex-start;
+            border: 1px solid #e5e7eb;
+        }
+
+        .message.bot strong {
+            color: #4f46e5;
+        }
+
+        .message.bot ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .message.bot li {
+            margin: 4px 0;
+        }
+
+        .sources {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: rgba(79, 70, 229, 0.1);
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .sources a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+
+        .sources a:hover {
+            text-decoration: underline;
+        }
+
+        .input-container {
+            padding: 20px;
+            border-top: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: none;
+            min-height: 44px;
+            max-height: 120px;
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #4f46e5;
+        }
+
+        .send-button {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            min-width: 80px;
+        }
+
+        .send-button:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .send-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+            font-size: 14px;
+            padding: 12px 16px;
+            background: #f3f4f6;
+            border-radius: 18px;
+            align-self: flex-start;
+            max-width: 80%;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: #6b7280;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .welcome-message {
+            text-align: center;
+            color: #6b7280;
+            padding: 40px 20px;
+        }
+
+        .welcome-message h3 {
+            color: #4f46e5;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .suggestion {
+            background: rgba(79, 70, 229, 0.1);
+            color: #4f46e5;
+            border: 1px solid rgba(79, 70, 229, 0.2);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .suggestion:hover {
+            background: rgba(79, 70, 229, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .error-message {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                height: 100vh;
+                border-radius: 0;
+                max-width: none;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="status-indicator"></div>
+            <h1>🤖 DeFi Mentor</h1>
+            <p>Il tuo assistente esperto per Web3, DeFi e Blockchain</p>
+        </div>
+
+        <div class="chat-container">
+            <div class="messages" id="messages">
+                <div class="welcome-message">
+                    <h3>👋 Benvenuto in ImparoDeFi!</h3>
+                    <p>Sono qui per aiutarti a navigare il mondo Web3. Fammi una domanda!</p>
+                    
+                    <div class="suggestions">
+                        <div class="suggestion" onclick="sendSuggestion('Cos\'è DeFi?')">Cos'è DeFi?</div>
+                        <div class="suggestion" onclick="sendSuggestion('Come funziona una blockchain?')">Come funziona una blockchain?</div>
+                        <div class="suggestion" onclick="sendSuggestion('Come configurare un wallet?')">Come configurare un wallet?</div>
+                        <div class="suggestion" onclick="sendSuggestion('Cosa sono gli NFT?')">Cosa sono gli NFT?</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <span>DeFi Mentor sta scrivendo</span>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea 
+                        id="messageInput" 
+                        class="input-field" 
+                        placeholder="Chiedi qualsiasi cosa su Web3, DeFi, blockchain..."
+                        rows="1"
+                    ></textarea>
+                    <button id="sendButton" class="send-button" onclick="sendMessage()">
+                        Invia
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const messagesContainer = document.getElementById('messages');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const typingIndicator = document.getElementById('typingIndicator');
+        
+        let conversationHistory = [];
+
+        // Auto-resize textarea
+        messageInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+
+        // Send message on Enter (but allow Shift+Enter for new line)
+        messageInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        function sendSuggestion(suggestion) {
+            messageInput.value = suggestion;
+            sendMessage();
+        }
+
+        async function sendMessage() {
+            const message = messageInput.value.trim();
+            console.log('Tentativo di invio messaggio:', message);
+            if (!message) {
+                console.log('Messaggio vuoto, non invio');
+                return;
+            }
+
+            // Add user message to chat
+            addMessage(message, 'user');
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            // Disable send button
+            sendButton.disabled = true;
+            sendButton.textContent = 'Invio...';
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        conversationHistory: conversationHistory
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                // Hide typing indicator
+                hideTypingIndicator();
+
+                // Add bot response to chat
+                addMessage(data.response, 'bot', data.sources);
+
+                // Update conversation history
+                conversationHistory.push({
+                    user: message,
+                    bot: data.response
+                });
+
+                // Keep only last 10 exchanges
+                if (conversationHistory.length > 10) {
+                    conversationHistory = conversationHistory.slice(-10);
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                hideTypingIndicator();
+                addMessage('Mi dispiace, si è verificato un errore. Riprova più tardi.', 'bot');
+            } finally {
+                sendButton.disabled = false;
+                sendButton.textContent = 'Invia';
+            }
+        }
+
+        function addMessage(content, sender, sources = null) {
+            // Remove welcome message if it exists
+            const welcomeMessage = messagesContainer.querySelector('.welcome-message');
+            if (welcomeMessage) {
+                welcomeMessage.remove();
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            // Format the message content
+            let formattedContent = content
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/\n/g, '<br>')
+                .replace(/•/g, '&bull;');
+
+            messageDiv.innerHTML = formattedContent;
+
+            // Add sources if available
+            if (sources && sources.length > 0) {
+                const sourcesDiv = document.createElement('div');
+                sourcesDiv.className = 'sources';
+                sourcesDiv.innerHTML = '<strong>Fonti:</strong> ' + 
+                    sources.map(source => 
+                        `<a href="${source.url}" target="_blank">${source.title}</a>`
+                    ).join(', ');
+                messageDiv.appendChild(sourcesDiv);
+            }
+
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            typingIndicator.style.display = 'flex';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            typingIndicator.style.display = 'none';
+        }
+
+        // Focus on input when page loads
+        window.addEventListener('load', () => {
+            messageInput.focus();
+        });
+    </script>
+</body>
+</html>

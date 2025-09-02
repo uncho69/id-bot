@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImparoDeFi - Esempio Integrazione Widget</title>
+    <style>
+        /* Stili della landing page ImparoDeFi */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #4a5568;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .features {
+            padding: 4rem 0;
+            background: #f8fafc;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature h3 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .feature p {
+            color: #4a5568;
+        }
+
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Nota: Il widget DeFi Mentor si caricherà automaticamente */
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>ImparoDeFi</h1>
+            <p>Il tuo accesso al mondo Web3</p>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Blockchain, DeFi, NFTs, memecoins, metaversi</h2>
+            <p>Tutto questo è Web3. Le opportunità sono infinite, ma anche le trappole. ImparoDeFi è la tua guida sicura per navigare questo nuovo mondo.</p>
+            <a href="#" class="cta-button">Inizia Subito</a>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #2d3748;">Perché ImparoDeFi?</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>🎓 Curazione Esperta</h3>
+                    <p>I nostri esperti Web3 selezionano solo progetti realmente validi, evitando truffatori e rischi di phishing.</p>
+                </div>
+                <div class="feature">
+                    <h3>🔒 Sicurezza Garantita</h3>
+                    <p>Naviga nel mondo Web3 con fiducia, sapendo che ogni progetto è stato verificato da veri esperti del settore.</p>
+                </div>
+                <div class="feature">
+                    <h3>🚀 Accesso Facilitato</h3>
+                    <p>Supera le barriere d'ingresso del Web3 con la nostra guida step-by-step per principianti e esperti.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 ImparoDeFi. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+    <!-- 
+    ========================================
+    INTEGRAZIONE DEFI MENTOR WIDGET
+    ========================================
+    -->
+    
+    <!-- Carica il widget DeFi Mentor -->
+    <script src="defi-mentor-widget.js"></script>
+    
+    <!-- Configurazione personalizzata -->
+    <script>
+        // Personalizza il widget per ImparoDeFi
+        DefiMentor.CONFIG = {
+            apiUrl: 'http://localhost:3000/api/chat', // Cambia con il tuo dominio
+            demoMode: true, // Modalità demo gratuita
+            position: 'bottom-right',
+            theme: 'imparodefi'
+        };
+
+        // Eventi personalizzati (opzionale)
+        DefiMentor.onOpen = function() {
+            console.log('🚀 DeFi Mentor aperto!');
+            // Qui puoi aggiungere analytics o tracking
+        };
+
+        DefiMentor.onMessage = function(message) {
+            console.log('💬 Messaggio inviato:', message);
+            // Qui puoi tracciare le interazioni utente
+        };
+    </script>
+
+    <!-- 
+    ========================================
+    FINE INTEGRAZIONE WIDGET
+    ========================================
+    -->
+</body>
+</html>
