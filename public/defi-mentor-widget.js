@@ -359,18 +359,158 @@
                 40% { transform: scale(1); opacity: 1; }
             }
 
+            /* Mobile Responsive Design */
+            @media (max-width: 768px) {
+                .defi-mentor-widget {
+                    bottom: 15px;
+                    right: 15px;
+                }
+                
+                .defi-mentor-toggle {
+                    width: 56px;
+                    height: 56px;
+                    box-shadow: 0 3px 15px rgba(102, 126, 234, 0.4);
+                }
+                
+                .defi-mentor-toggle svg {
+                    width: 22px;
+                    height: 22px;
+                }
+                
+                .defi-mentor-badge {
+                    font-size: 9px;
+                    padding: 1px 5px;
+                    top: -6px;
+                    right: -6px;
+                }
+            }
+            
             @media (max-width: 480px) {
                 .defi-mentor-window {
-                    width: calc(100vw - 40px);
-                    height: calc(100vh - 120px);
-                    bottom: 80px;
-                    right: 20px;
-                    left: 20px;
+                    width: calc(100vw - 20px);
+                    height: calc(100vh - 100px);
+                    bottom: 70px;
+                    right: 10px;
+                    left: 10px;
+                    border-radius: 12px;
+                    max-height: 85vh;
                 }
                 
                 .defi-mentor-widget {
-                    bottom: 20px;
-                    right: 20px;
+                    bottom: 15px;
+                    right: 15px;
+                }
+                
+                .defi-mentor-toggle {
+                    width: 52px;
+                    height: 52px;
+                }
+                
+                .defi-mentor-toggle svg {
+                    width: 20px;
+                    height: 20px;
+                }
+                
+                .defi-mentor-header {
+                    padding: 14px 16px;
+                }
+                
+                .defi-mentor-header h3 {
+                    font-size: 15px;
+                }
+                
+                .defi-mentor-status {
+                    font-size: 11px;
+                }
+                
+                .defi-mentor-messages {
+                    padding: 16px;
+                }
+                
+                .defi-mentor-content {
+                    font-size: 13px;
+                    padding: 10px 14px;
+                    max-width: 85%;
+                }
+                
+                .defi-mentor-avatar {
+                    width: 28px;
+                    height: 28px;
+                    font-size: 11px;
+                }
+                
+                .defi-mentor-suggestions {
+                    gap: 6px;
+                    margin-top: 10px;
+                }
+                
+                .defi-mentor-suggestion {
+                    font-size: 11px;
+                    padding: 5px 10px;
+                    border-radius: 12px;
+                }
+                
+                .defi-mentor-input-container {
+                    padding: 12px 16px;
+                }
+                
+                .defi-mentor-input-wrapper {
+                    padding: 6px 12px;
+                    border-radius: 20px;
+                }
+                
+                .defi-mentor-input {
+                    font-size: 13px;
+                    padding: 6px 0;
+                }
+                
+                .defi-mentor-send {
+                    width: 28px;
+                    height: 28px;
+                }
+                
+                .defi-mentor-send svg {
+                    width: 14px;
+                    height: 14px;
+                }
+            }
+            
+            /* Landscape mobile optimization */
+            @media (max-width: 768px) and (orientation: landscape) {
+                .defi-mentor-window {
+                    height: calc(100vh - 80px);
+                    max-height: 90vh;
+                }
+                
+                .defi-mentor-messages {
+                    padding: 12px 16px;
+                }
+                
+                .defi-mentor-input-container {
+                    padding: 10px 16px;
+                }
+            }
+            
+            /* Touch-friendly improvements */
+            @media (hover: none) and (pointer: coarse) {
+                .defi-mentor-suggestion {
+                    min-height: 44px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                
+                .defi-mentor-send {
+                    min-width: 44px;
+                    min-height: 44px;
+                }
+                
+                .defi-mentor-close {
+                    min-width: 44px;
+                    min-height: 44px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                 }
             }
         `;
@@ -412,6 +552,33 @@
                     this.toggle();
                 }
             });
+            
+            // Prevent body scroll when widget is open on mobile
+            const originalBodyOverflow = document.body.style.overflow;
+            
+            // Handle viewport changes
+            window.addEventListener('resize', () => {
+                if (this.isOpen && window.innerWidth <= 768) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = originalBodyOverflow;
+                }
+            });
+            
+            // Touch events for better mobile experience
+            const toggle = document.querySelector('.defi-mentor-toggle');
+            if (toggle) {
+                toggle.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    toggle.style.transform = 'scale(0.95)';
+                });
+                
+                toggle.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    toggle.style.transform = 'scale(1)';
+                    this.toggle();
+                });
+            }
         },
 
         toggle: function() {
@@ -423,10 +590,32 @@
             if (this.isOpen) {
                 window.classList.add('active');
                 toggle.classList.add('active');
-                document.getElementById('defi-mentor-input').focus();
+                
+                // Prevent body scroll on mobile when widget is open
+                if (window.innerWidth <= 768) {
+                    document.body.style.overflow = 'hidden';
+                }
+                
+                // Focus input with delay for mobile
+                setTimeout(() => {
+                    const input = document.getElementById('defi-mentor-input');
+                    if (input) {
+                        input.focus();
+                        // Scroll to bottom on mobile
+                        if (window.innerWidth <= 768) {
+                            const messages = document.getElementById('defi-mentor-messages');
+                            if (messages) {
+                                messages.scrollTop = messages.scrollHeight;
+                            }
+                        }
+                    }
+                }, 300);
             } else {
                 window.classList.remove('active');
                 toggle.classList.remove('active');
+                
+                // Restore body scroll
+                document.body.style.overflow = '';
             }
         },
 
