@@ -52,7 +52,7 @@
                         
                         <div class="defi-mentor-suggestions">
                             <div class="defi-mentor-suggestion" onclick="DefiMentor.sendSuggestion('Cos\\'è DeFi?')">Cos'è DeFi?</div>
-                            <div class="defi-mentor-suggestion" onclick="DefiMentor.sendSuggestion('Come funziona Blockchain?')">Come funziona Blockchain?</div>
+                            <div class="defi-mentor-suggestion" onclick="DefiMentor.sendSuggestion('Come funziona la Blockchain?')">Come funziona la Blockchain?</div>
                             <div class="defi-mentor-suggestion" onclick="DefiMentor.sendSuggestion('Cosa sono gli NFT?')">Cosa sono gli NFT?</div>
                             <div class="defi-mentor-suggestion" onclick="DefiMentor.sendSuggestion('Come creare un wallet?')">Come creare un wallet?</div>
                         </div>
@@ -382,7 +382,7 @@
         'defi': 'DeFi (Decentralized Finance) è un ecosistema di applicazioni finanziarie costruite su blockchain. Permette di prestare, prendere in prestito, fare trading e guadagnare interessi senza intermediari tradizionali come banche. È una rivoluzione che sta democratizzando l\'accesso ai servizi finanziari!',
         'blockchain': 'Blockchain è una tecnologia di registro distribuito che mantiene una lista crescente di record (blocchi) collegati e protetti usando crittografia. È immutabile, trasparente e decentralizzata. È la base tecnologica di Bitcoin e molte altre criptovalute.',
         'nft': 'Gli NFT (Non-Fungible Token) sono token unici che rappresentano la proprietà di un asset digitale specifico, come arte, musica, video o altri contenuti digitali. Ogni NFT è unico e non può essere replicato.',
-        'wallet': 'Un wallet crypto è un software che ti permette di inviare, ricevere e conservare criptovalute. Ci sono diversi tipi: hot wallet (online) per uso quotidiano e cold wallet (offline) per maggiore sicurezza.',
+        'wallet': 'Per creare un wallet crypto:\n\n1. **Scegli il tipo**: Hot wallet (MetaMask, Trust Wallet) per uso quotidiano o cold wallet (Ledger, Trezor) per massima sicurezza\n\n2. **Scarica l\'app**: Vai su App Store/Play Store e scarica MetaMask o Trust Wallet\n\n3. **Crea account**: Segui la procedura guidata, crea una password forte\n\n4. **Salva la seed phrase**: 12-24 parole di recupero - SCRIVILE e CONSERVALE al sicuro!\n\n5. **Verifica**: Testa con piccole quantità prima di depositi importanti\n\n⚠️ **IMPORTANTE**: Mai condividere la seed phrase con nessuno!',
         'default': 'Interessante domanda! In modalità beta, posso fornire informazioni generali su Web3, DeFi, Blockchain e NFT. Per risposte più specifiche e personalizzate, considera di attivare la modalità AI avanzata.'
     };
 
@@ -527,7 +527,7 @@
                 if (message.includes('defi')) return DEMO_RESPONSES.defi;
                 if (message.includes('blockchain')) return DEMO_RESPONSES.blockchain;
                 if (message.includes('nft')) return DEMO_RESPONSES.nft;
-                if (message.includes('wallet')) return DEMO_RESPONSES.wallet;
+                if (message.includes('wallet') || message.includes('creare')) return DEMO_RESPONSES.wallet;
                 
                 return DEMO_RESPONSES.default;
             } else {
