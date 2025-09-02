@@ -24,7 +24,7 @@ Aggiungi questo codice alla fine del `<body>` della tua landing page:
 // Personalizza il widget
 DefiMentor.CONFIG = {
     apiUrl: 'https://tuodominio.com/api/chat', // Il tuo endpoint API
-    demoMode: true, // true = demo gratuita, false = AI avanzata
+    betaMode: true, // true = beta gratuita, false = AI avanzata
     position: 'bottom-right', // bottom-right, bottom-left
     theme: 'imparodefi' // tema personalizzato
 };
@@ -47,7 +47,7 @@ DefiMentor.CONFIG = {
 ### **Colori e Branding**
 Il widget usa i colori di ImparoDeFi:
 - **Gradiente principale**: `#667eea` → `#764ba2`
-- **Badge demo**: `#10b981` (verde)
+- **Badge beta**: `#10b981` (verde)
 - **Testo**: `#374151`
 
 ### **Posizione**
@@ -67,11 +67,11 @@ DefiMentor.CONFIG.position = 'bottom-left'; // o 'bottom-right'
 
 ## 🔧 **CONFIGURAZIONI AVANZATE**
 
-### **Modalità Demo vs AI Avanzata**
+### **Modalità Beta vs AI Avanzata**
 
-#### **Demo Mode (Gratuita)**
+#### **Beta Mode (Gratuita)**
 ```javascript
-DefiMentor.CONFIG.demoMode = true;
+DefiMentor.CONFIG.betaMode = true;
 ```
 - ✅ **Costo**: €0
 - ✅ **Risposte predefinite**
@@ -79,7 +79,7 @@ DefiMentor.CONFIG.demoMode = true;
 
 #### **AI Avanzata (A pagamento)**
 ```javascript
-DefiMentor.CONFIG.demoMode = false;
+DefiMentor.CONFIG.betaMode = false;
 DefiMentor.CONFIG.apiUrl = 'https://tuodominio.com/api/chat';
 ```
 - 💰 **Costo**: €20-50/mese
@@ -125,7 +125,7 @@ Il widget è completamente responsive:
         // Configurazione personalizzata
         DefiMentor.CONFIG = {
             apiUrl: 'https://imparodefi.xyz/api/chat',
-            demoMode: true, // Inizia con demo gratuita
+            betaMode: true, // Inizia con beta gratuita
             position: 'bottom-right'
         };
     </script>
@@ -182,7 +182,7 @@ Dopo l'integrazione avrai:
 - ✅ **Widget chat flottante** in basso a destra
 - ✅ **Design moderno** e minimal
 - ✅ **Integrazione perfetta** con ImparoDeFi
-- ✅ **Modalità demo gratuita**
+- ✅ **Modalità beta gratuita**
 - ✅ **Responsive** per tutti i dispositivi
 - ✅ **Facile da personalizzare**
 

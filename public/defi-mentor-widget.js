@@ -1,7 +1,7 @@
 /**
  * DeFi Mentor Chat Widget
  * Integrazione per ImparoDeFi Landing Page
- * Modalità Demo - Completamente Gratuita
+ * Modalità Beta - Completamente Gratuita
  */
 
 (function() {
@@ -10,7 +10,7 @@
     // Configurazione del widget
     const CONFIG = {
         apiUrl: 'http://localhost:3000/api/chat', // Cambia con il tuo dominio
-        demoMode: true,
+        betaMode: true,
         position: 'bottom-right',
         theme: 'imparodefi'
     };
@@ -20,7 +20,7 @@
         return `
             <div id="defi-mentor-widget" class="defi-mentor-widget">
                 <div class="defi-mentor-toggle" onclick="DefiMentor.toggle()">
-                    <div class="defi-mentor-badge">Demo</div>
+                    <div class="defi-mentor-badge">Beta</div>
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
                     </svg>
@@ -30,7 +30,7 @@
                     <div class="defi-mentor-header">
                         <div>
                             <h3>DeFi Mentor</h3>
-                            <div class="defi-mentor-status">Modalità Demo • Sempre online</div>
+                            <div class="defi-mentor-status">Modalità Beta • Sempre online</div>
                         </div>
                         <button class="defi-mentor-close" onclick="DefiMentor.toggle()">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -46,7 +46,7 @@
                                 Ciao! Sono DeFi Mentor, il tuo assistente AI per il mondo Web3. 
                                 Sono qui per aiutarti a capire Blockchain, DeFi, NFT e molto altro!
                                 <br><br>
-                                <strong>Modalità Demo attiva</strong> - Prova a farmi una domanda! 🚀
+                                <strong>Modalità Beta attiva</strong> - Prova a farmi una domanda! 🚀
                             </div>
                         </div>
                         
@@ -383,7 +383,7 @@
         'blockchain': 'Blockchain è una tecnologia di registro distribuito che mantiene una lista crescente di record (blocchi) collegati e protetti usando crittografia. È immutabile, trasparente e decentralizzata. È la base tecnologica di Bitcoin e molte altre criptovalute.',
         'nft': 'Gli NFT (Non-Fungible Token) sono token unici che rappresentano la proprietà di un asset digitale specifico, come arte, musica, video o altri contenuti digitali. Ogni NFT è unico e non può essere replicato.',
         'wallet': 'Un wallet crypto è un software che ti permette di inviare, ricevere e conservare criptovalute. Ci sono diversi tipi: hot wallet (online) per uso quotidiano e cold wallet (offline) per maggiore sicurezza.',
-        'default': 'Interessante domanda! In modalità demo, posso fornire informazioni generali su Web3, DeFi, Blockchain e NFT. Per risposte più specifiche e personalizzate, considera di attivare la modalità AI avanzata.'
+        'default': 'Interessante domanda! In modalità beta, posso fornire informazioni generali su Web3, DeFi, Blockchain e NFT. Per risposte più specifiche e personalizzate, considera di attivare la modalità AI avanzata.'
     };
 
     // Widget API
@@ -518,7 +518,7 @@
         },
 
         getBotResponse: async function(userMessage) {
-            if (CONFIG.demoMode) {
+            if (CONFIG.betaMode) {
                 // Simulate network delay
                 await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
                 
